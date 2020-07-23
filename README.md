@@ -1,68 +1,97 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Create React App, Heroku - <a href="https://create-react-test.herokuapp.com/">Demo</a> 
+ 
+### Description
+This is the create react app live on heroku using node.js and express server. 
 
-## Available Scripts
+### You can learn this
+* Deploy a create react app to Heroku. 
 
-In the project directory, you can run:
+### Software used for this application
+* React (version 16.2.0) 
+* [Create React App](https://github.com/facebook/create-react-app)    
+* Heroku [Set up a free account ](https://www.heroku.com/)
+* NPM (version 5.6.0)
+* Node (version 6.10.3)
+* express (version 4.16.3)
 
-### `npm start`
+### Clone and serve this app.
+* First `npm install` then run `npm start`. (may need to have npm version 5.2+ installed on your machine)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Deploy create react app to Heroku. 
+* Go to [Create React App](https://github.com/facebook/create-react-app) and follow the instructions in the readme.
+* `cd app-name` into app <code>npm run-script build</code> to build the app in a build directory.
+* Create an `app.js` file `touch app.js`.
+* For Heroku this app points to the <code>app.js</code> server which uses node.js and express. (node.js is required to serve locally)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```js
 
-### `npm test`
+//app.js
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+const express = require('express');
+const http = require('http');
+const path = require('path');
 
-### `npm run build`
+var app = express();
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+app.use(express.static(path.join(__dirname, 'build')));
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+const port = process.env.PORT || '8080';
+app.set('port', port);
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const server = http.createServer(app);
+server.listen(port, () => console.log(`Running on localhost:${port}`));
 
-### `npm run eject`
+```
+* Run <code>node app.js</code> to serve the app at `http://localhost:8080`.
+* Run <code>touch Procfile</code> in this app's root specifies the server for heroku to use.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```text
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+//Procfile
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+web: node app.js
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
 
-## Learn More
+* Run `npm install express --save`.
+* A few adjustments to `package.json` are necessary for the heroku deploy process. `postinstall` and `engines` are important parts of `package.json` for a successful deploy. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```json
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+//package.json
 
-### Code Splitting
+{
+  "name": "app-name",
+  "version": "0.1.0",
+  "private": true,
+  "main": "app.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "postinstall": "react-scripts build"
+  },
+  "engines": {
+    "node": "~6.10.3",
+    "npm": "~5.6.0"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1",
+  }
+}
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+``` 
 
-### Analyzing the Bundle Size
+* Assuming the heroku account is created and heroku toolbelt is installed make an initial commit and push to a github repo, then login to heroku, create a heroku app and push to heroku. Steps as follow.
+* `git commit -am "initial commit"` then `git push`. (pushing app to new github repo)
+* Login to heroku `heroku login` enter heroku password.
+* Create heroku app `heroku create app-name`. (this will add the heroku remote)
+* Deploy to heroku `git push heroku master`.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+There may be an error during deploy pertaining to `package.lock` and `yarn.lock`. Delete `yarn.lock` from the app, commit and push to github repo and then `git push heroku master` again and the error will go away.
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Each time there is a change to the app commit and push to github then `git push heroku master` to keep the two master branches in sync.  
