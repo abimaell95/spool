@@ -23,7 +23,7 @@ const CategoriesPlot = () =>{
         },
         title: {
             display: true,
-            text: 'Categorias',
+            text: 'Categorías',
             fontFamily:'sans-serif'
 
         }    
