@@ -110,6 +110,15 @@ function NavBar2(props) {
                                     </li>
                                 </>
                             }
+                            {
+                                isLoggedIn
+                                    &&
+                                    <>
+                                        <li> 
+                                            <a href="/">Logout</a>
+                                        </li>
+                                    </>
+                            }
                             </ul>
                         </nav>
                     </div>
