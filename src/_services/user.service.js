@@ -7,24 +7,20 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    delete: _delete,
+    getReports,
+    getTypes
 };
 
 function login(username, password) {
+    const user = { email:username, password }
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(user)
     };
 
-    return fetch(`/users/authenticate`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('token', JSON.stringify(user));
-
-            return user;
-        });
+    return fetch(`http://54.88.62.27/spoolapi/api/auth/`, requestOptions).then(handleResponse)
 }
 
 function logout() {
@@ -38,7 +34,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`/users`, requestOptions).then(handleResponse);
+    return fetch(`/api/user`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -47,7 +43,7 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(`/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:3000/api/user/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {
@@ -57,7 +53,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`/users/register`, requestOptions).then(handleResponse);
+    return fetch(`http://54.88.62.27/spoolapi/api/user/`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -67,7 +63,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);;
+    return fetch(`/api/user/${user.id}`, requestOptions).then(handleResponse);;
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -77,10 +73,36 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(`/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`/api/user/${id}`, requestOptions).then(handleResponse);
 }
 
+function getReports(){
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
 
+    return fetch(`http://54.88.62.27/spoolapi/api/reports/user`, requestOptions).then(handleResponse);
+}
+
+function getTypes(){
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`http://54.88.62.27/spoolapi/api/user/types`, requestOptions).then(handleResponse);
+}
+
+/*function getUser(token){
+    const requestOptions = {
+        method: 'GET',
+        body: JSON.stringify({token:token})
+    };
+
+    return fetch(`http://54.88.62.27/spoolapi/api/me/`, requestOptions).then(handleResponse);
+}
+*/
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);

@@ -27,23 +27,27 @@ function ApplicationCard (props){
             return "text-warning"
         }
     }
+
+    const application = {...props,
+        type:"Aplicación"
+    }
     return (
         <>
         <div className="card container m-4">
             
             <div className="card-body row">
-                <h5 className="card-title col-10 col-md-11 mt-2">{props.title}</h5>
+                <h5 className="card-title col-10 col-md-11 mt-2">{props.project.title}</h5>
 
-                <i className="fa fa-trash col-2 col-md-1 mt-2 text-right" onClick={handleOpenDelete}></i>
+                <i className="fa fa-trash col-2 col-md-1 mt-2 text-right text-danger" onClick={handleOpenDelete}></i>
 
                 <p className={colorText()+" font-weight-bold col-12"}>{props.state}</p>    
-                <p className="card-text col-12 text-justify">{props.description}</p>
+                <p className="card-text col-12 text-justify">{props.project.description}</p>
                 <a href=" " className="card-link col-12" onClick={handleOpen}>Ver más</a>   
             </div>
             
         </div>
         <ApplicationModal {...props} show={open} onHide={() => setOpen(false)}/>
-        <DeleteApplicationModal show={openDelete} onHide={()=>setOpenDelete(false)}/>
+        <DeleteApplicationModal {...application}show={openDelete} onHide={()=>setOpenDelete(false)}/>
         </>
         // react-bootstrap<ApplicationModal show={open} onHide={() => setOpen(false)}/>
         //<ApplicationModal open={open} toggle={toggle} key={props.id}/>

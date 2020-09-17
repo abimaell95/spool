@@ -81,8 +81,25 @@ function NavBar2(props) {
                                         <li className={"clientPool"+ (isActive==='clientPool'?' active':'')}>
                                             <a href="/client/pool">Proyectos</a>
                                         </li>
-                                        <li className={"clientCharts"+ (isActive==='clientCharts'?' active':'')}>
-                                            <a href="/client/charts">Gráficos</a> 
+                                    </>    
+                                    }
+                                    {
+                                        user === 'admin'
+                                            &&
+                                        isLoggedIn
+                                            &&
+                                    <>
+                                        <li className={"adminHome"+ (isActive==='adminHome'?' active':'')}>
+                                            <a href="/admin">Inicio</a>
+                                        </li>
+                                        <li className={"adminReports"+ (isActive==='adminReports'?' active':'')}>
+                                            <a href="/admin/reports">Reportes</a>
+                                        </li>
+                                        <li className={"adminCharts"+ (isActive==='adminCharts'?' active':'')}>
+                                            <a href="/admin/charts">Gráficos</a> 
+                                        </li>
+                                        <li className={"adminNews"+ (isActive==='adminNews'?' active':'')}>
+                                            <a href="/admin/news">Noticias</a> 
                                         </li>
                                     </>    
                                     }
@@ -103,10 +120,10 @@ function NavBar2(props) {
                                         &&
                                 <>
                                     <li> 
-                                        <a href="/login/home">Login</a>
+                                        <a href="/login">Iniciar Sesion</a>
                                     </li>
                                     <li className="align-items-center h-auto ml-sm-3">
-                                        <a className="btn btn-primary d-none d-sm-block" href="/register">Sign Up</a>
+                                        <a className="btn btn-primary d-none d-sm-block" href="/register">Registrarse</a>
                                     </li>
                                 </>
                             }
@@ -115,7 +132,7 @@ function NavBar2(props) {
                                     &&
                                     <>
                                         <li> 
-                                            <a href="/">Logout</a>
+                                            <a href="/login">Cerrar sesion</a>
                                         </li>
                                     </>
                             }
