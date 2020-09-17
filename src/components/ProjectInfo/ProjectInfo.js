@@ -16,7 +16,7 @@ function ProjectInfo(props) {
         <div className="row bg-white row_info">
             <div className="col-md-4 col-lg-5 col-sm-12 ">
                 <p className="mb-0 text-4">Propuesto por</p>
-                <h6>{ props.proposer }</h6>
+                <h6>{ props.user.firstName+' '+props.user.lastName }</h6>
             </div>
 
             <div className="col-md-4 col-lg-5 col-sm-12 ">
