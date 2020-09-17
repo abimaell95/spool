@@ -2,24 +2,15 @@ import React from 'react';
 import './ProjectCard.css';
 import {Link} from 'react-router-dom';
 function ProjectCard(props) {
-    
-    function colorText(){
-        if(props.state==='Disponible'){
-            return "text-success"
-        }else{
-            return "text-warning"
-        }
-    }
-
     return(
         <>
         <div className="project-card col-sm-6 col-lg-4 mb-5">
             <div className="bg-white pb-1 shadow-sm rounded text-center">
                 <div className="color-card" style={{backgroundColor:props.color}}/>
                 <div className="m-4">
-                    <h3 className="text-center">{props.title}</h3>
+                    <h3>{props.title}</h3>
                     <div className="row mb-3 mx-1 d-flex justify-content-between">
-                        <span className={"text-2 d-inline-flex d-sm-block text-center py-1 "+colorText()}>{props.state}</span>
+                        <span className="text-2 d-inline-flex d-sm-block text-center py-1 px-2 rounded bg-primary text-light">{props.state}</span>
                         <span id="project-category" className="text-2 d-inline-flex d-sm-block text-center py-1 px-2 rounded bg-primary text-light">{props.mainCategory}</span>
                     </div>
                     <p className="text-2 line-height-4 text-justify">{props.description}</p>
